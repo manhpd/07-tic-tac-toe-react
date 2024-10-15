@@ -1,21 +1,21 @@
 // render 3 x 3 Grid
 
 import React from 'react';
-import { useState } from 'react';
-const initialGrid = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-];
+import { Cell, Turn } from '../../App';
 
-export default function GameBoard() {
+export default function GameBoard({onSelectSquare, board}: {onSelectSquare: (row: number, col: number) => void, board: Cell[][]}) {
     return (
         <ol id="game-board">
-            {initialGrid.map((row, rowIndex) => (
+            {board.map((row, rowIndex) => (
                 <li key={rowIndex} className="row">
                     <ol>
-                        {row.map((playerSymbol, colIndex) => (
-                            <button key={colIndex} className="cell">{playerSymbol}</button>
+                        {row.map((symbol, colIndex) => (
+                            <button 
+                                key={colIndex} 
+                                className="cell" 
+                                onClick={()=>onSelectSquare(rowIndex,colIndex)}
+                                disabled={symbol !== null}
+                            >{symbol}</button>
                         ))}
                     </ol>
                 </li>

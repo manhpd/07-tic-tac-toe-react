@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-export default function Player({ name, symbol }: { name: string, symbol: string }) {
+export default function Player({ name, symbol, isActive, onNameSubmit}: { name: string, symbol: string, isActive: boolean, onNameSubmit: (symbol: string, newName: string) => void }) {
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState(name);
 
@@ -9,8 +9,8 @@ export default function Player({ name, symbol }: { name: string, symbol: string 
         setIsEditing((prev) => !prev);
         if (isEditing) {
             // Save the new name
-
         }
+        onNameSubmit(symbol, newName);
     };
 
     const handeleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,7 @@ export default function Player({ name, symbol }: { name: string, symbol: string 
             ;
     }
     return (
-        <li>
+        <li className={isActive ? 'active' : undefined}>
             <span className="player">
                 {playerName}
                 <span className="player-symbol">{symbol}</span>
